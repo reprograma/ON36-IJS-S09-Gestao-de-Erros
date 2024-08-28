@@ -49,11 +49,11 @@ O que veremos na aula de hoje?
 
 Nessa aula iremos ver importância da gestão de erros em APIs e como ela impacta a experiência do usuário, manutenção do código e a segurança da aplicação.
 
-## Conteúdo
+# Conteúdo
 
-### 1. Tipos de Erros em APIs
+# 1. Tipos de Erros em APIs
 
-#### 1.1 Erros do cliente:
+## 1.1 Erros do cliente:
 
 Erros do lado do cliente ocorrem quando há problemas na requisição feita ao servidor, como requisições malformadas ou falta de autorização para acessar um recurso.
 
@@ -74,7 +74,7 @@ Erros do lado do cliente ocorrem quando há problemas na requisição feita ao s
 
   ![Alt text](./assets/erro-cliente-403.png)
 
-#### 1.2 Erros do Servidor:
+## 1.2 Erros do Servidor:
 
 Erros do lado do servidor acontecem quando há um problema ao processar a requisição do cliente. Geralmente, esses erros indicam falhas no código, no banco de dados ou no próprio servidor.
 
@@ -90,7 +90,7 @@ Erros do lado do servidor acontecem quando há um problema ao processar a requis
 - **HTTP 502** (Bad Gateway): Indica que um servidor, atuando como gateway ou proxy, recebeu uma resposta inválida de outro servidor ao tentar atender a requisição.
   - Exemplo: Um serviço intermediário como um load balancer não conseguiu se comunicar com o servidor de aplicação.
 
-#### 1.3 Erros de Validação:
+## 1.3 Erros de Validação:
 
 Erros de validação ocorrem quando os dados enviados pelo cliente não atendem aos requisitos ou regras definidas pela aplicação.
 
@@ -98,16 +98,16 @@ Erros de validação ocorrem quando os dados enviados pelo cliente não atendem 
 
   ![Alt text](./assets/erro-validacao-422.png)
 
-### 2. Estratégias de Gestão de Erros
+# 2. Estratégias de Gestão de Erros
 
 Vamos discutir e explorar diferentes abordagens para lidar com erros e problemas que podem ocorrer em uma API. O objetivo é fornecer estratégias e técnicas para detectar, tratar e prevenir erros, garantindo que os problemas sejam rapidamente identificados e resolvidos, minimizando o impacto nos usuários e no negócio.
 
 
-#### 2.1 Padrões de Respostas
+## 2.1 Padrões de Respostas
 
 Definir padrões claros de resposta para diferentes tipos de erros, incluindo status HTTP, mensagens de erro e estrutura de dados.
 
-##### 2.1.1 Uso de Códigos de Status HTTP Corretos
+### 2.1.1 Uso de Códigos de Status HTTP Corretos
 
 Os códigos de status de resposta HTTP indicam se uma solicitação HTTP específica foi concluída com êxito. As respostas são agrupadas em cinco classes:
 
@@ -132,7 +132,7 @@ Exemplos Comuns:
 }
 ```
 
-###### Boas Práticas
+#### Boas Práticas
 
 - Evite detalhes desnecessários nas mensagens de erro. Em vez disso, use mensagens de erro genéricas para evitar a exposição de informações sensíveis.
 
@@ -181,7 +181,7 @@ application/problem+json
 application/problem+xml
 ```
 
-###### Estrutura Básica de uma Mensagem de Erro
+#### Estrutura Básica de uma Mensagem de Erro
 
 - **Title**: um breve resumo do tipo de problema.
 - **Detail**: uma descrição detalhada do problema.
@@ -236,7 +236,7 @@ Neste exemplo, a propriedade `errors` é uma extensão personalizada que contém
 
 
 
-#### 2.2 Middleware de Tratamento de Erros
+## 2.2 Middleware de Tratamento de Erros
 
 Implementar middleware para capturar e tratar erros de forma centralizada, convertendo-os em respostas HTTP apropriadas.
 
@@ -279,7 +279,7 @@ Cada etapa do processo representa um middleware. Se em algum ponto houver um pro
 
 
 
-##### 2.2.1 Exceções padrão do NestJS
+### 2.2.1 Exceções padrão do NestJS
 
 
 As exceções são uma forma de indicar que algo `deu errado`. No NestJS, temos exceções padrão que podem ser utilizadas para tratar erros comuns, como erros de solicitação HTTP, erros de validação de dados, etc.
@@ -292,7 +292,7 @@ O NestJS fornece várias exceções padrão que podem ser utilizadas em seus pro
 * `UnauthorizedException`: uma exceção para acesso não autorizado.
 * Outras: `ForbiddenException`, `UnauthorizedException`, [etc](https://docs.nestjs.com/exception-filters#built-in-http-exceptions).
 
-##### 2.2.2 Filter de Exceções
+### 2.2.2 Filter de Exceções
 
 Às vezes, você precisará criar uma exceção personalizada para tratar um erro específico. Por exemplo, se você estiver trabalhando com uma API de pagamento e quiser tratar erros de pagamento, você pode criar uma exceção personalizada chamada `PaymentException`.
 
@@ -333,7 +333,7 @@ export class PaymentsController {
 
 ```
 
-##### 2.2.3 Interceptors
+### 2.2.3 Interceptors
 
 Interceptors são objetos que podem ser utilizados para interceptar solicitações e respostas em tempo real, permitindo que você execute código personalizado antes ou após a execução de um controller ou middleware.
 
@@ -341,7 +341,7 @@ Eles podem ser utilizados para transformar dados de saída, gerenciar erros de f
 
 
 
-#### 2.3 Log de Erros
+### 2.3 Log de Erros
 
 
 O log de erros é um registro detalhado dos erros e exceções que ocorrem na aplicação. Isso permite que você:
@@ -354,7 +354,7 @@ Para logs de produção, é comum utilizar ferramentas especializadas, como Wins
 Essas ferramentas permitem armazenar logs de maneira centralizada, aplicar filtros, fazer buscas complexas e gerar relatórios detalhados.
 
 
-#### 2.4 Monitoramento e Alertas
+### 2.4 Monitoramento e Alertas
 
 Monitoramento envolve a coleta contínua de métricas e logs da sua aplicação para identificar comportamentos anômalos e problemas de performance.
 
@@ -366,9 +366,10 @@ Existem várias ferramentas de monitoramento que você pode utilizar, como:
 * ELK Stack (Elasticsearch, Logstash, Kibana) para analisar logs e monitorar o aplicativo
 * New Relic para monitorar o desempenho do aplicativo e identificar problemas
 
-### 3. SSDLC e Práticas de Código Seguro
 
-#### 3.1 SSDLC
+# 3. SSDLC e Práticas de Código Seguro
+
+## 3.1 SSDLC
 
 O SSDLC (Secure Software Development Life Cycle) é uma abordagem de desenvolvimento de software que integra práticas de segurança em todas as etapas do ciclo de vida de desenvolvimento. Isso ajuda a garantir que as preocupações com a segurança sejam abordadas desde o início do projeto até a sua manutenção, o conceito Shift Left. 
 
@@ -384,7 +385,7 @@ O fluxo básico da plataforma é:
 
 Agora, vamos aplicar cada etapa do SSDLC a esse cenário:
 
-**Requisitos de Segurança**
+**1. Requisitos de Segurança**
 
 Nessa fase, a plataforma identifica e define o que precisa ser protegido.
 
@@ -393,7 +394,8 @@ Nessa fase, a plataforma identifica e define o que precisa ser protegido.
 * Gerenciamento de consentimento: Como os usuários fornecerão consentimento e como o sistema lidará com solicitações para remover ou alterar dados.
 * Requisitos de auditoria: Definição dos eventos que devem ser registrados (e.g., tentativas de login, alterações nos eventos).
 
-**Revisão de Arquitetura e Design**
+**2. Revisão de Arquitetura e Design**
+
 Aqui, a plataforma avalia o design do sistema para garantir que ele é seguro por padrão.
 
 * Segurança por design: A arquitetura deve garantir a segurança desde o início, como o isolamento de componentes críticos (e.g., banco de dados).
@@ -401,31 +403,35 @@ Aqui, a plataforma avalia o design do sistema para garantir que ele é seguro po
 * Controle de acesso em camadas: Implementação de um sistema de autorização robusto (e.g., RBAC ou ABAC) para garantir que apenas usuários autorizados possam acessar certas funcionalidades.
 * Ferramentas de segurança na nuvem: Utilização de serviços de nuvem com ferramentas integradas de segurança, como firewalls e monitoramento de integridade.
 
-**Modelagem de Ameaça**
+**3. Modelagem de Ameaça**
+
 Depois que os requisitos de segurança são coletados e o design da arquitetura é finalizado, a plataforma passa a identificar possíveis ameaças e ataques.
 
 * Mapeamento de ameaças: Identificação de possíveis ameaças, como ataques de injeção de SQL, XSS, DDoS, e sequestro de sessão.
 * Avaliação de risco: Classificação das ameaças de acordo com sua gravidade e probabilidade, e definição de planos de mitigação ou eliminação de riscos.
 
-**Implementação e Revisão de Código**
+**4. Implementação e Revisão de Código**
+
 Durante o desenvolvimento, a equipe segue práticas de segurança para garantir que o código seja seguro.
 
 * Boas práticas de código seguro: Validação de entradas, uso de prepared statements e sanificação de dados.
 * Ferramentas de segurança no desenvolvimento: Integração de linters de segurança, verificadores de dependências e ferramentas de análise estática (e.g., SonarQube).
 * Revisão de código: Realização de revisões de código focadas na identificação de vulnerabilidades de segurança.
 
-**Testes de Segurança e Penetração**
+**5. Testes de Segurança e Penetração**
+
 Uma vez implementado o código, são realizados testes para identificar e corrigir vulnerabilidades.
 
 * Testes automatizados e manuais: Execução de testes de segurança automatizados (SAST, DAST) e testes de penetração manuais para explorar potenciais falhas de segurança.
 * Testes de segurança contínuos: Integração de testes de segurança contínuos no pipeline de CI/CD.
 
-**Implementação**
+**6. Implementação**
 
 * Deploy seguro: Garantir que o processo de deploy siga práticas seguras, como a proteção de pipelines de CI/CD e a implementação de controles de acesso ao ambiente de produção.
 * Checklist de segurança: Uma checklist de segurança antes do deploy, incluindo a validação de configurações e testes finais.
 
-**Manutenção**
+**7. Manutenção**
+
 Após a implementação, a plataforma deve continuar monitorando e atualizando suas práticas de segurança.
 
 * Monitoramento contínuo: Implementação de monitoramento e logging de segurança para detectar atividades suspeitas.
@@ -434,45 +440,45 @@ Após a implementação, a plataforma deve continuar monitorando e atualizando s
 * Plano de resposta a incidentes: Estabelecer um plano de resposta a incidentes, incluindo notificações e procedimentos de recuperação.
 
 
-#### 3.2 Desenvolvendo com praticas de segurança usando OWASP
+## 3.2 Desenvolvendo com praticas de segurança usando OWASP
 
 O Open Web Application Security Project, ou OWASP, é uma organização sem fins lucrativos com foco em melhorar a segurança de software.
 
 A organização mantém diversos projetos open source. Toda gestão da OWASP é realizada de forma colaborativa e cada projeto apresenta uma abordagem distinta, embora todas estejam alinhados com a segurança web.
 
-##### Projetos
+**Projetos**
 
-##### [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+### [OWASP Top 10](https://owasp.org/www-project-top-ten/)
 
 
 É um relatório com os 10 riscos de segurança mais criticos, encontrados em aplicações web.
 
 
-##### [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) - Padrão de verificação de segurança de aplicativo 
+### [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) - Padrão de verificação de segurança de aplicativo 
 
 
 É conjunto de requisitos e controle de segurança necessários ao projetar, desenvolver e testar aplicações web. É um guia para verificar a segurança das aplicações web em diferentes níveis de maturidade, do baixo ao avançado.
 
 
-##### [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/)
+#### [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/)
 
 É uma lista que descrevem as 10 categorias de técnica de defesa e controle. É uma lista de conhecimento prático sobre como desenvolver software seguro. 
 
 
-##### [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/) 
+### [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/) 
 
 São recomendações sobre práticas de codificacões desde a prevenção de vulnerabilidade comuns até implementação correta de controle de seguranção.
 
-##### [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/)
+### [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/)
 
 É um guia de orientações e técnicas que ajuda a identificar vulnerabilidades e erros de segurança em seu código
 
 
-##### [OWASP Cheat Sheets](https://cheatsheetseries.owasp.org/index.html)
+### [OWASP Cheat Sheets](https://cheatsheetseries.owasp.org/index.html)
 
 Fornecem dicas rápidas e orientações para resolver problemas de segurança específicos de diferentes tecnologias e linguagens de programação.
 
-#### 3.2.1 Boas praticas de segurança para codificação
+## 3.3 Boas praticas de segurança para codificação
 
 Para criar esse guia usei como base **OWASP Secure Coding Practices** e **OWASP Cheat Sheets**
 
@@ -481,9 +487,9 @@ Para criar esse guia usei como base **OWASP Secure Coding Practices** e **OWASP 
 - [Segurança de autenticação e gerenciamento de acesso](#2-segurança-de-autenticação-e-gerenciamento-de-acesso)
 - [Error handling and logging](#3-error-handling-and-logging)
 
-##### A. Segurança de entrada e saída de dados:
+### A. Segurança de entrada e saída de dados:
 
-##### A.1 → **Validação de entrada de dados**
+#### A.1 → **Validação de entrada de dados**
 
 Sempre valide e sanitize todas as entradas de dados vindas dos usuários ou de fontes externas para prevenir ataques de Injeção de SQL, Cross-Site Scripting (XSS) e outros.
 
@@ -505,7 +511,7 @@ A validação de entrada deve ser aplicada tanto no **nível sintático** quanto
 
 
 
-##### A.2 → **Output encoding**
+#### A.2 → **Output encoding**
 
 Sempre valide dados em um sistema confiável(ou seja, o servidor), codifique todos os caracteres, a menos que sejam considerados seguros e sanitize a saída de dados não confiáveis usando comandos do sistema operacional.
 
@@ -515,9 +521,9 @@ A codificação de saída (output encoding) é uma técnica eficaz para prevenir
  💡 Leia mais: [aqui](https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html#output-encoding) e [aqui](https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output)
 
 
-##### B. Segurança de autenticação e gerenciamento de acesso:
+### B. Segurança de autenticação e gerenciamento de acesso:
 
-##### B.1 → **Autenticação e Gerenciamento de Credenciais**
+#### B.1 → **Autenticação e Gerenciamento de Credenciais**
 
 A autenticação refere-se à validação das informações fornecidas pelo usuário, como nome de usuário e senha, para garantir que correspondam às credenciais corretas e autorizar o acesso ao sistema.
 
@@ -539,7 +545,7 @@ Todas as medidas de autenticação devem ser implementadas em um sistema confiá
 
 
 
-##### B.2 → Gerenciamento de Sessão
+#### B.2 → Gerenciamento de Sessão
 
 O gerenciamento de sessões refere-se ao processo seguro de lidar com várias solicitações de um único usuário ou entidade em um aplicativo ou serviço baseado na web. Durante uma sessão, que consiste em várias solicitações e transações, um usuário é autenticado para acessar o sistema. O gerenciamento de sessões envolve a troca de informações secretas com usuários autenticados, tornando as comunicações de rede criptografadas essenciais para garantir a segurança do processo.
 
@@ -561,7 +567,7 @@ Boas práticas:
 
 
 
-##### B.3 → **Access control**
+#### B.3 → **Access control**
 
 No contexto das aplicações web, o controle de acesso depende da autenticação e gerenciamento de sessões:
 
@@ -590,9 +596,9 @@ Boas práticas:
 - [ASVS V4-Access-Control](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x12-V4-Access-Control.md)
 
 
-##### C. **Error handling and logging**
+### C. **Error handling and logging**
 
-##### C.1 **Error handling**
+#### C.1 **Error handling**
 
 Verifique se a aplicação não exibe mensagens de erro que contenham dados sensíveis que possam auxiliar um atacante, incluindo ID de sessão, versões de software/framework e informações pessoais. Um dos riscos mais comuns relacionados ao tratamento inadequado de erros é o [Information Disclosure](https://portswigger.net/web-security/information-disclosure), que pode revelar informações confidenciais para usuários não autorizados.
 
@@ -601,7 +607,7 @@ Boas práticas:
 - Não divulgue informações confidenciais em respostas de erro, incluindo detalhes do sistema, ID de sessão ou informações de conta
 - Implemente mensagens de erro genéricas e use páginas de erro personalizadas
 
-##### C.2 Logging
+#### C.2 Logging
 
 Logging é essencial para a segurança do código, permitindo aos desenvolvedores monitorar e detectar incidentes de segurança. Práticas adequadas de logging envolvem capturar informações relevantes, como interações do usuário e erros, para análise posterior. Isso ajuda a identificar comportamentos suspeitos e rastrear a causa de erros, facilitando a correção de bugs e a resposta a possíveis ataques. É importante seguir práticas recomendadas, como definir uma estrutura clara de logs e proteger informações confidenciais.
 
@@ -622,9 +628,6 @@ Boas práticas:
 
 
 
-##### 3.2.2 Teste de segurança
-
-##### 3.2.3 Segurança na Gestão de Erros
 
 ####
 

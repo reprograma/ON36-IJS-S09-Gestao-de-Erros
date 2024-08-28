@@ -373,6 +373,12 @@ Existem várias ferramentas de monitoramento que você pode utilizar, como:
 
 O SSDLC (Secure Software Development Life Cycle) é uma abordagem de desenvolvimento de software que integra práticas de segurança em todas as etapas do ciclo de vida de desenvolvimento. Isso ajuda a garantir que as preocupações com a segurança sejam abordadas desde o início do projeto até a sua manutenção, o conceito Shift Left. 
 
+</br>
+
+<img src="./assets/ssdlc.png">
+
+
+
 **Exemplo: Plataforma Voluntáriados**
 
 Cenário: A Plataforma Voluntáriados é um sistema que permite o cadastro de eventos que precisam de voluntários e o cadastro de pessoas interessadas em participar desses eventos.

@@ -23,19 +23,18 @@ O que veremos na aula de hoje?
 
   - [Tipos de Erros em APIs](#tipos-de-erros-em-apis)
 
-    - [Erros do cliente]()
-    - [Erros do servidor]()
-    - [Erros de validação]()
+    - [Erros do cliente](#11-erros-do-cliente)
+    - [Erros do servidor](#12-erros-do-servidor)
+    - [Erros de validação](#13-erros-de-validação)
 
-  - [Estratégias de Gestão de Erros]()
+  - [Estratégias de Gestão de Erros](#2-estratégias-de-gestão-de-erros)
 
-    - [Padrões de Resposta]()
-    - [Middleware de Tratamento de Erro]()
-    - [Log de Erros]()
-    - [Monitoramento e Alertas]()
-    - [Segurança na Gestão de Erros]()
+    - [Padrões de Resposta](#21-padrões-de-respostas)
+    - [Middleware de Tratamento de Erro](#22-middleware-de-tratamento-de-erros)
+    - [Log de Erros](#23-log-de-erros)
+    - [Monitoramento e Alertas](#24-monitoramento-e-alertas)
 
-  - [Segurança]()
+  - [SSDLC e Práticas de Código Seguro]()
 
     - [Autenticação e autorização]()
     - [Testes de Segurança]()
@@ -366,6 +365,268 @@ Existem várias ferramentas de monitoramento que você pode utilizar, como:
 * Prometheus e Grafana para monitorar métricas de desempenho
 * ELK Stack (Elasticsearch, Logstash, Kibana) para analisar logs e monitorar o aplicativo
 * New Relic para monitorar o desempenho do aplicativo e identificar problemas
+
+### 3. SSDLC e Práticas de Código Seguro
+
+#### 3.1 SSDLC
+
+O SSDLC (Secure Software Development Life Cycle) é uma abordagem de desenvolvimento de software que integra práticas de segurança em todas as etapas do ciclo de vida de desenvolvimento. Isso ajuda a garantir que as preocupações com a segurança sejam abordadas desde o início do projeto até a sua manutenção, o conceito Shift Left. 
+
+**Exemplo: Plataforma Voluntáriados**
+
+Cenário: A Plataforma Voluntáriados é um sistema que permite o cadastro de eventos que precisam de voluntários e o cadastro de pessoas interessadas em participar desses eventos.
+
+O fluxo básico da plataforma é:
+
+    Cadastro do administrador do evento voluntário
+    Cadastro do evento voluntário
+    Inscrição para o evento voluntário
+
+Agora, vamos aplicar cada etapa do SSDLC a esse cenário:
+
+**Requisitos de Segurança**
+
+Nessa fase, a plataforma identifica e define o que precisa ser protegido.
+
+* Classificação de dados: Que tipo de dados serão coletados (e.g., nome, e-mail, senha)? Como serão armazenados e manipulados? Qual o nível de criptografia necessário para proteger esses dados?
+* LGPD: A conformidade com a LGPD é essencial. Isso inclui obter o consentimento explícito dos usuários e permitir que eles controlem seus dados.
+* Gerenciamento de consentimento: Como os usuários fornecerão consentimento e como o sistema lidará com solicitações para remover ou alterar dados.
+* Requisitos de auditoria: Definição dos eventos que devem ser registrados (e.g., tentativas de login, alterações nos eventos).
+
+**Revisão de Arquitetura e Design**
+Aqui, a plataforma avalia o design do sistema para garantir que ele é seguro por padrão.
+
+* Segurança por design: A arquitetura deve garantir a segurança desde o início, como o isolamento de componentes críticos (e.g., banco de dados).
+* Protocolos de segurança: Uso de protocolos seguros para a transmissão de dados (e.g., HTTPS, TLS).
+* Controle de acesso em camadas: Implementação de um sistema de autorização robusto (e.g., RBAC ou ABAC) para garantir que apenas usuários autorizados possam acessar certas funcionalidades.
+* Ferramentas de segurança na nuvem: Utilização de serviços de nuvem com ferramentas integradas de segurança, como firewalls e monitoramento de integridade.
+
+**Modelagem de Ameaça**
+Depois que os requisitos de segurança são coletados e o design da arquitetura é finalizado, a plataforma passa a identificar possíveis ameaças e ataques.
+
+* Mapeamento de ameaças: Identificação de possíveis ameaças, como ataques de injeção de SQL, XSS, DDoS, e sequestro de sessão.
+* Avaliação de risco: Classificação das ameaças de acordo com sua gravidade e probabilidade, e definição de planos de mitigação ou eliminação de riscos.
+
+**Implementação e Revisão de Código**
+Durante o desenvolvimento, a equipe segue práticas de segurança para garantir que o código seja seguro.
+
+* Boas práticas de código seguro: Validação de entradas, uso de prepared statements e sanificação de dados.
+* Ferramentas de segurança no desenvolvimento: Integração de linters de segurança, verificadores de dependências e ferramentas de análise estática (e.g., SonarQube).
+* Revisão de código: Realização de revisões de código focadas na identificação de vulnerabilidades de segurança.
+
+**Testes de Segurança e Penetração**
+Uma vez implementado o código, são realizados testes para identificar e corrigir vulnerabilidades.
+
+* Testes automatizados e manuais: Execução de testes de segurança automatizados (SAST, DAST) e testes de penetração manuais para explorar potenciais falhas de segurança.
+* Testes de segurança contínuos: Integração de testes de segurança contínuos no pipeline de CI/CD.
+
+**Implementação**
+
+* Deploy seguro: Garantir que o processo de deploy siga práticas seguras, como a proteção de pipelines de CI/CD e a implementação de controles de acesso ao ambiente de produção.
+* Checklist de segurança: Uma checklist de segurança antes do deploy, incluindo a validação de configurações e testes finais.
+
+**Manutenção**
+Após a implementação, a plataforma deve continuar monitorando e atualizando suas práticas de segurança.
+
+* Monitoramento contínuo: Implementação de monitoramento e logging de segurança para detectar atividades suspeitas.
+* Automação de monitoramento: Utilização de sistemas de alerta automático para eventos críticos, integrando-os com ferramentas como SIEM.
+* Atualizações e patches: Manutenção contínua da aplicação, com a aplicação de patches de segurança e reavaliação das práticas de segurança.
+* Plano de resposta a incidentes: Estabelecer um plano de resposta a incidentes, incluindo notificações e procedimentos de recuperação.
+
+
+#### 3.2 Desenvolvendo com praticas de segurança usando OWASP
+
+O Open Web Application Security Project, ou OWASP, é uma organização sem fins lucrativos com foco em melhorar a segurança de software.
+
+A organização mantém diversos projetos open source. Toda gestão da OWASP é realizada de forma colaborativa e cada projeto apresenta uma abordagem distinta, embora todas estejam alinhados com a segurança web.
+
+##### Projetos
+
+##### [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+
+
+É um relatório com os 10 riscos de segurança mais criticos, encontrados em aplicações web.
+
+
+##### [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/) - Padrão de verificação de segurança de aplicativo 
+
+
+É conjunto de requisitos e controle de segurança necessários ao projetar, desenvolver e testar aplicações web. É um guia para verificar a segurança das aplicações web em diferentes níveis de maturidade, do baixo ao avançado.
+
+
+##### [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/)
+
+É uma lista que descrevem as 10 categorias de técnica de defesa e controle. É uma lista de conhecimento prático sobre como desenvolver software seguro. 
+
+
+##### [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/) 
+
+São recomendações sobre práticas de codificacões desde a prevenção de vulnerabilidade comuns até implementação correta de controle de seguranção.
+
+##### [OWASP Code Review Guide](https://owasp.org/www-project-code-review-guide/)
+
+É um guia de orientações e técnicas que ajuda a identificar vulnerabilidades e erros de segurança em seu código
+
+
+##### [OWASP Cheat Sheets](https://cheatsheetseries.owasp.org/index.html)
+
+Fornecem dicas rápidas e orientações para resolver problemas de segurança específicos de diferentes tecnologias e linguagens de programação.
+
+#### 3.2.1 Boas praticas de segurança para codificação
+
+Para criar esse guia usei como base **OWASP Secure Coding Practices** e **OWASP Cheat Sheets**
+
+
+- [Segurança de entrada e saída de dados](#1-segurança-de-entrada-e-saída-de-dados)
+- [Segurança de autenticação e gerenciamento de acesso](#2-segurança-de-autenticação-e-gerenciamento-de-acesso)
+- [Error handling and logging](#3-error-handling-and-logging)
+
+##### A. Segurança de entrada e saída de dados:
+
+##### A.1 → **Validação de entrada de dados**
+
+Sempre valide e sanitize todas as entradas de dados vindas dos usuários ou de fontes externas para prevenir ataques de Injeção de SQL, Cross-Site Scripting (XSS) e outros.
+
+A validação de entrada deve ser aplicada tanto no **nível sintático** quanto **no nível semântico.**
+
+- **A validação sintática** deve reforçar a sintaxe correta dos campos estruturados (por exemplo, SSN, data, símbolo de moeda).
+- **A validação semântica** deve reforçar a correção de seus *valores* no contexto de negócios específico (por exemplo, a data de início é anterior à data de término, o preço está dentro do intervalo esperado).
+
+
+
+→ Nunca confie de forma alguma na entrada do usuário. <br>
+→ Validar e rejeitar as entradas é melhor do que sanitizá-las.
+
+💡 Leia mais:
+
+- [https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.htm](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
+- [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/README](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/07-Input_Validation_Testing/README)
+- [https://portswigger.net/burp/documentation/desktop/testing-workflow/input-validation](https://portswigger.net/burp/documentation/desktop/testing-workflow/input-validation)
+
+
+
+##### A.2 → **Output encoding**
+
+Sempre valide dados em um sistema confiável(ou seja, o servidor), codifique todos os caracteres, a menos que sejam considerados seguros e sanitize a saída de dados não confiáveis usando comandos do sistema operacional.
+
+A codificação de saída (output encoding) é uma técnica eficaz para prevenir ataques de Cross-Site Scripting (XSS), que é um dos principais tipos de ataques que podem ser prevenidos por meio dessa prática de segurança.
+
+ 
+ 💡 Leia mais: [aqui](https://cheatsheetseries.owasp.org/cheatsheets/Web_Service_Security_Cheat_Sheet.html#output-encoding) e [aqui](https://portswigger.net/web-security/cross-site-scripting/preventing#encode-data-on-output)
+
+
+##### B. Segurança de autenticação e gerenciamento de acesso:
+
+##### B.1 → **Autenticação e Gerenciamento de Credenciais**
+
+A autenticação refere-se à validação das informações fornecidas pelo usuário, como nome de usuário e senha, para garantir que correspondam às credenciais corretas e autorizar o acesso ao sistema.
+
+O gerenciamento de credenciais abrange atividades relacionadas ao armazenamento seguro e à proteção das informações de autenticação dos usuários, como senhas, chaves de acesso ou certificados digitais. Isso envolve a implementação de práticas de segurança, como a criptografia, para evitar o acesso não autorizado a essas informações.
+
+Todas as medidas de autenticação devem ser implementadas em um sistema confiável, o que normalmente é o servidor onde o backend da aplicação está em execução.
+
+- **Use um protocolo de transmissão seguro:**  as senhas devem ser transmitidas por um protocolo seguro, como HTTPS, para evitar a interceptação por invasores.
+- **As senhas salt e hash:**  devem ser salted e hashed antes de armazená-las no banco de dados.
+- **Armazenar senhas em local seguro:**  As senhas devem ser armazenadas em local seguro com acesso restrito.
+- **Monitorar tentativas de senha:**  as organizações devem monitorar senhas com falha para detectar e prevenir ataques de força bruta.
+
+
+💡 Veja sobre: 
+
+- [Dicas sobre armazenamento de senha](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#Use_a_cryptographically_strong_credential-specific_salt)
+- [Dicas de autenticação](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
+- [Autenticação e gerenciamento do ciclo de vida](https://pages.nist.gov/800-63-3/sp800-63b.html).
+
+
+
+##### B.2 → Gerenciamento de Sessão
+
+O gerenciamento de sessões refere-se ao processo seguro de lidar com várias solicitações de um único usuário ou entidade em um aplicativo ou serviço baseado na web. Durante uma sessão, que consiste em várias solicitações e transações, um usuário é autenticado para acessar o sistema. O gerenciamento de sessões envolve a troca de informações secretas com usuários autenticados, tornando as comunicações de rede criptografadas essenciais para garantir a segurança do processo.
+
+Boas práticas:
+
+- **Definir sinalizadores Secure/HttpOnly em seus cookies**
+- **Gerar novos cookies de sessão**
+    - Um novo cookie sempre deve ser gerado a cada login do usuário.
+    - O cookie também deve expirar se a conta ficar inativa por um longo período de tempo e forçar o usuário a se autenticar novamente.
+    - O cookie anterior deve ser destruído imediatamente mesmo que não tenha expirado e nunca reutilizado.
+- **Configurar cookies de sessão corretamente**
+    - Os tokens de sessão devem ser longos, imprevisíveis e exclusivos.
+    - Use o param “expire” para forçar o encerramento periódico da sessão como um maneira de evitar o sequestro de sessão.
+
+
+💡 Veja sobre: 
+
+- [Dicas de gerenciamento de sessão](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+
+
+
+##### B.3 → **Access control**
+
+No contexto das aplicações web, o controle de acesso depende da autenticação e gerenciamento de sessões:
+
+- **A autenticação** identifica o usuário e confirma que ele é quem diz ser.
+- **O gerenciamento de sessão** identifica quais solicitações HTTP subsequentes estão sendo feitas por esse mesmo usuário.
+- **O controle de acesso** determina se o usuário tem permissão para realizar a ação que está tentando realizar.
+
+Broken Access Control ocorre quando um usuário pode ter acesso e executar ações que não lhe são atribuídas.
+
+Exemplo: temos uma aplicação com dois tipos de usuários, `admin` e `comum`. O usuário `admin` pode excluir e editar qualquer usuário `comum`, enquanto o `comum` só realiza ações na sua própria conta. A falha acontece quando o usuário `comum` tem as mesmas ações do usuário `admin`, resultando em falha de escalação de privilégios.
+
+Boas práticas:
+
+- Princípio do privilégio mínimo
+- Negar por padrão
+- Validar permissões em todas solicitações
+- Princípio de defesa em profundidade
+- Evite controle de acesso baseado em funções
+
+
+💡 Veja sobre: 
+
+- [Broken Access Control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/)
+- [Cheat Sheets](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html), [PortSwigger](https://portswigger.net/web-security/access-control)
+- [Project Proactive Controls c7 enforce access controls](https://owasp.org/www-project-proactive-controls/v3/en/c7-enforce-access-controls)
+- [ASVS V4-Access-Control](https://github.com/OWASP/ASVS/blob/master/4.0/en/0x12-V4-Access-Control.md)
+
+
+##### C. **Error handling and logging**
+
+##### C.1 **Error handling**
+
+Verifique se a aplicação não exibe mensagens de erro que contenham dados sensíveis que possam auxiliar um atacante, incluindo ID de sessão, versões de software/framework e informações pessoais. Um dos riscos mais comuns relacionados ao tratamento inadequado de erros é o [Information Disclosure](https://portswigger.net/web-security/information-disclosure), que pode revelar informações confidenciais para usuários não autorizados.
+
+Boas práticas:
+
+- Não divulgue informações confidenciais em respostas de erro, incluindo detalhes do sistema, ID de sessão ou informações de conta
+- Implemente mensagens de erro genéricas e use páginas de erro personalizadas
+
+##### C.2 Logging
+
+Logging é essencial para a segurança do código, permitindo aos desenvolvedores monitorar e detectar incidentes de segurança. Práticas adequadas de logging envolvem capturar informações relevantes, como interações do usuário e erros, para análise posterior. Isso ajuda a identificar comportamentos suspeitos e rastrear a causa de erros, facilitando a correção de bugs e a resposta a possíveis ataques. É importante seguir práticas recomendadas, como definir uma estrutura clara de logs e proteger informações confidenciais.
+
+Boas práticas:
+
+- Restrinja o acesso aos logs apenas a usuários autorizados
+- Não armazene informações confidenciais em logs, incluindo informações desnecessárias detalhes do sistema, ID de sessão ou senhas
+- Use níveis apropriados de logging: Utilize diferentes níveis de logging (como DEBUG, INFO, WARNING, ERROR) para registrar informações com base na sua importância. Isso permite filtrar e priorizar os logs conforme necessário.
+- Faça log de exceções
+
+
+💡 Veja sobre Error handling and logging: 
+
+- [OWASP - Security Logging and Monitoring Failures](https://owasp.org/Top10/A09_2021-Security_Logging_and_Monitoring_Failures/)
+- [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
+- [OWASP Error Handling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html)
+- [OWASP ASVS - V7: Error Logging](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V7-Error-Logging.md)
+
+
+
+##### 3.2.2 Teste de segurança
+
+##### 3.2.3 Segurança na Gestão de Erros
+
+####
 
 ---
 

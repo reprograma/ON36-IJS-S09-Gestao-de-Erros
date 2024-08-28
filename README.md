@@ -34,10 +34,11 @@ O que veremos na aula de hoje?
     - [Log de Erros](#23-log-de-erros)
     - [Monitoramento e Alertas](#24-monitoramento-e-alertas)
 
-  - [SSDLC e Práticas de Código Seguro]()
+  - [SSDLC e Práticas de Código Seguro](#3-ssdlc-e-práticas-de-código-seguroß)
 
-    - [Autenticação e autorização]()
-    - [Testes de Segurança]()
+    - [SSDLC](#31-ssdlc)
+    - [OWASP](#32-owasp)
+    - [Boas praticas de segurança para codificação](#33-boas-praticas-de-segurança-para-codificação)
 
   - [Exercícios](#exercícios)
   - [Material da aula](#material-da-aula)
@@ -446,7 +447,7 @@ Após a implementação, a plataforma deve continuar monitorando e atualizando s
 * Plano de resposta a incidentes: Estabelecer um plano de resposta a incidentes, incluindo notificações e procedimentos de recuperação.
 
 
-## 3.2 Desenvolvendo com praticas de segurança usando OWASP
+## 3.2 OWASP
 
 O Open Web Application Security Project, ou OWASP, é uma organização sem fins lucrativos com foco em melhorar a segurança de software.
 

@@ -354,6 +354,67 @@ O log de erros é um registro detalhado dos erros e exceções que ocorrem na ap
 Para logs de produção, é comum utilizar ferramentas especializadas, como Winston, Logstash, ou serviços na nuvem como Elastic Stack ou Datadog.
 Essas ferramentas permitem armazenar logs de maneira centralizada, aplicar filtros, fazer buscas complexas e gerar relatórios detalhados.
 
+Vamos usar de exemplo o `winston`.
+
+*Winston*:
+
+Winston é uma das bibliotecas mais populares para registro de logs, do NestJs.
+
+Para instalar o modulo `winston`, execute o seguinte comando:
+
+
+```bash
+npm install winston nest-winston
+```
+
+**Configuração**:
+
+
+Em nosso arquivo `main.ts`, precisamos importar o modulo `winston` e configurá-lo:
+
+
+```ts
+import { WinstonModule } from 'nest-winston';
+import * as winston from 'winston';
+
+@Module({
+  imports: [
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.Console({
+          format: winston.format.combine(
+            winston.format.timestamp(),
+            winston.format.prettyPrint(),
+            winston.format.colorize({ all: true })
+          ),
+        }),
+        new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+        new winston.transports.File({ filename: 'logs/combined.log' }),
+      ],
+    }),
+  ],
+})
+export class AppModule {}
+
+```
+
+Nesse exemplo, o `Winston`` foi configurado para registrar logs tanto no console quanto em um arquivo chamado error.log, com um formato de log personalizado que inclui timestamp.
+
+**Tipos de Log**
+
+Winston suporta vários tipos de log, que podem ser configurados da seguinte forma:
+
+| Tipo | Descrição |
+| --- | --- |
+| **info** | Log de informações |
+| **warn** | Log de advertência |
+| **error** | Log de erro |
+| **debug** | Log de depuração |
+
+<img src="./assets/log.png">
+
+[Evite expor informações sensiveis!]
+
 
 ### 2.4 Monitoramento e Alertas
 
@@ -489,10 +550,6 @@ Fornecem dicas rápidas e orientações para resolver problemas de segurança es
 
 Para criar esse guia usei como base **OWASP Secure Coding Practices** e **OWASP Cheat Sheets**
 
-
-- [Segurança de entrada e saída de dados](#1-segurança-de-entrada-e-saída-de-dados)
-- [Segurança de autenticação e gerenciamento de acesso](#2-segurança-de-autenticação-e-gerenciamento-de-acesso)
-- [Error handling and logging](#3-error-handling-and-logging)
 
 ### A. Segurança de entrada e saída de dados:
 
@@ -632,6 +689,12 @@ Boas práticas:
 - [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)
 - [OWASP Error Handling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html)
 - [OWASP ASVS - V7: Error Logging](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V7-Error-Logging.md)
+
+
+### Teste de segurança
+
+
+### Ferramentas de segurança na pipeline
 
 
 

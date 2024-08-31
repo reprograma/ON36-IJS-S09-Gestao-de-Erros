@@ -699,12 +699,10 @@ Boas práticas:
 - [OWASP ASVS - V7: Error Logging](https://github.com/OWASP/ASVS/blob/master/5.0/en/0x15-V7-Error-Logging.md)
 
 
-### Teste de segurança
-
 
 ### Ferramentas de segurança na pipeline
 
-
+Vamos falar sobre SAST e DAST.
 
 
 ####

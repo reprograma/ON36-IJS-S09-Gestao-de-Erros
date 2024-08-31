@@ -702,7 +702,132 @@ Boas práticas:
 
 ### Ferramentas de segurança na pipeline
 
-Vamos falar sobre SAST e DAST.
+Vamos entender alguns conceitos importantes:
+
+**O que é pipeline**
+
+Um pipeline, no contexto do desenvolvimento de software, refere-se a uma série de etapas ou estágios pelos quais as alterações de código passam antes de serem implantadas em produção. Cada estágio no pipeline representa uma tarefa específica, como a construção do código, a execução de testes, a análise de segurança e a implantação em diferentes ambientes.
+
+**O que é Workflow**
+
+Um fluxo de trabalho (workflow) refere-se à sequência de etapas ou tarefas que precisam ser realizadas para concluir um processo ou projeto específico. No desenvolvimento de software, um fluxo de trabalho geralmente inclui tarefas como codificação, teste, revisão e implantação.
+Ele é definido a partir de um arquivo YAML dentro da pasta .github/workflows.
+
+**O que é SAST**
+
+SAST (Teste de Segurança Estático) é uma técnica de teste de segurança usada em um pipeline de CI/CD. O SAST analisa o código-fonte em busca de vulnerabilidades conhecidas e práticas inseguras. Esses testes de segurança ajudam a identificar e corrigir problemas de segurança antes que o software seja implantado em produção, garantindo que o aplicativo seja seguro e protegido contra ameaças.
+
+**O que é DAST**
+
+DAST (Dynamic Application Security Testing) é um processo de teste de segurança que examina um aplicativo em execução para encontrar vulnerabilidades e identificar possíveis pontos de entrada para ataques. Ao contrário do SAST (Static Application Security Testing), que analisa o código-fonte em busca de vulnerabilidades, o DAST simula ataques reais, permitindo identificar falhas de segurança que só podem ser detectadas quando o aplicativo está em execução.
+
+**O que é GitHub Actions**
+O GitHub Actions ajuda a automatizar tarefas dentro do ciclo de vida de desenvolvimento de software. 
+
+**Entendendo o workflow**
+
+- Eventos: Um evento é uma atividade que aciona um fluxo de trabalho. Por exemplo, sempre que você faz um push ou quando uma solicitação de pull request é feita.
+
+- Trabalhos: Um trabalho é uma unidade de trabalho que precisa ser executada em resposta a um evento. Pode ser uma tarefa simples, como processar um arquivo de dados, ou um processo mais complexo, como executar um fluxo de trabalho completo.
+
+
+<img src="./assets/sast.png">
+
+| Elemento     | Descrição                                                                                                                                                    |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Jobs**     | O nome do trabalho, que neste exemplo é "build".                                                                                                             |
+| **Runs-on**  | Indica que o trabalho "build" será executado em uma máquina virtual com o sistema operacional Ubuntu mais recente.                                            |
+| **Etapas**   | As etapas são as unidades de trabalho individuais dentro de um trabalho. Cada etapa representa uma tarefa específica no processo de construção, teste ou implantação. |
+| **Uses**     | Ao usar a palavra-chave "uses" em uma etapa, você pode especificar a ação a ser executada. Exemplo: `uses: actions/checkout@v3`, que clona o repositório do projeto. |
+| **Name**     | Usada para atribuir um nome opcional a uma etapa específica, facilitando a identificação e descrição da etapa.                                                |
+
+
+## SAST no pipeline
+
+Como vimos o SAST analisa o código-fonte. Mas como isso é feito? No exemplo, vamos utilizar o `Horusec` que é um SAST. Para saber mais como instalar o `Horusec`, você pode conferir [aqui](https://github.com/rayanepimentel/InfoSec-iniciante/blob/main/devSecOps/pipeline-sast.md)
+
+O workflow ficará assim:
+
+```yml
+
+name: SecurityPipeline
+on:
+ push:
+   branches: [ "main" ]
+ pull_request:
+   branches: [ "main" ]
+
+
+jobs:
+ horusec-security:
+   name: horusec-security
+   runs-on: ubuntu-latest
+   steps:
+   - name: Check out code
+     uses: actions/checkout@v2
+     with:
+       fetch-depth: 0
+     - name: Run Horusec
+       id: run_horusec
+       uses: fike/horusec-action@v0.2.2
+       with:
+         arguments: -c=horusec-config.json -p ./
+```
+
+
+
+<img src="./assets/pipeline.png">
+
+- `main`: main é o branch principal da aplicação. É o código estável.
+- `feature`: é onde estamos escrevendo nossos códigos
+- `commit`: commit das nossas alterações
+- `pull request`: estamos enviando uma solicitação para mesclar nossas alterações na `main`
+- `github action`: quando criamos PR ou fazemos um push com `github actions` configurado, ele é acionado para executar os fluxos de trabalho definidos.
+ - `CI`: Toda vez que ele foi acionado, ele executa o trabalho: clona o projeto, roda todos os testes, gerar o build(arquivos que você precisa para a aplicação rodar) da aplicação. E também no nosso caso, executa o Horusec.
+ Ou seja, todas as vezes que fizermos um PR, esse processo garante que código de forma segura possa estar integrado na aplicação principal.
+ - `horusec`: O Horusec é uma ferramenta de segurança que analisa o código em busca de vulnerabilidades de segurança.
+
+ No nosso exemplo:
+
+
+- Irá rodar na máquina virtual Ubuntu
+- Clonar o projeto
+- Executar o Horusec no projeto, conforme o arquivo de configuração
+
+
+
+
+
+<img src="./assets/vulnsast1.png">
+
+Análise:
+
+Vulnerabilidade encontrada: 34
+
+Nivel: Critical
+
+Pipeline fail
+
+### Análise 
+
+
+Como vimos o Horusec encontrou 34 vulnerabilidades. Uma vulnerabilidde é uma possível falha de segurança e nesse caso precisamos analisar todas vulnerabilidade e classificá-las, se realmente é uma vulnerabilidade ou:
+
+
+- `falso-positivo`: a ferramenta detectou com vulnerabilidade mas não é uma vulnerabilidade, ela não entendeu o contexto por isso classificou errado.
+- `risco-aceito`: é uma vulnerabilidade mas por algum motivo a empresa aceita o risco, mas precisa de correção. O certo é não virar um débito técnico e sim entrar em um planejamento para próximas sprints.
+
+
+### Como analisar
+
+
+Veja o que a mensagem informa.
+
+- `Details`: Resumo da vulnerabilidade. Ela tem alguma CWE ou link? Se sim, clica nesse link e leia.
+
+Depois de analisar todas vulnerabilidades, se você realmente encontrou uma vulnerabilidade, precisa comunicar o time,  conforme o processo definido pela sua empresa.
+
+Só lembrando que `risco-aceito`, não é definido por nós. Nós validamos e reportamos as vulnerabilidades. Só vamos classifica-lá como `risco-aceito`, após o report do time.
 
 
 ####

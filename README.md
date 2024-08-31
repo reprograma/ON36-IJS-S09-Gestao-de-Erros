@@ -39,6 +39,7 @@ O que veremos na aula de hoje?
     - [SSDLC](#31-ssdlc)
     - [OWASP](#32-owasp)
     - [Boas praticas de segurança para codificação](#33-boas-praticas-de-segurança-para-codificação)
+    -[Ferramentas de segurança na pipeline](#ferramentas-de-segurança-na-pipeline)
 
   - [Exercícios](#exercícios)
   - [Material da aula](#material-da-aula)
@@ -700,7 +701,7 @@ Boas práticas:
 
 
 
-### Ferramentas de segurança na pipeline
+## Ferramentas de segurança na pipeline
 
 Vamos entender alguns conceitos importantes:
 
@@ -742,7 +743,7 @@ O GitHub Actions ajuda a automatizar tarefas dentro do ciclo de vida de desenvol
 | **Name**     | Usada para atribuir um nome opcional a uma etapa específica, facilitando a identificação e descrição da etapa.                                                |
 
 
-## SAST no pipeline
+### SAST no pipeline
 
 Como vimos o SAST analisa o código-fonte. Mas como isso é feito? No exemplo, vamos utilizar o `Horusec` que é um SAST. Para saber mais como instalar o `Horusec`, você pode conferir [aqui](https://github.com/rayanepimentel/InfoSec-iniciante/blob/main/devSecOps/pipeline-sast.md)
 

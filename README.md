@@ -348,7 +348,7 @@ Eles podem ser utilizados para transformar dados de saída, gerenciar erros de f
 O log de erros é um registro detalhado dos erros e exceções que ocorrem na aplicação. Isso permite que você:
 
 * Identifique e resolva problemas rapidamente
-* Análise padrões de erros e melhorie a segurança do aplicativo
+* Análise padrões de erros e melhore a segurança do aplicativo
 * Realize treinamento de dados para melhorar a previsibilidade e detecção de erros
 
 Para logs de produção, é comum utilizar ferramentas especializadas, como Winston, Logstash, ou serviços na nuvem como Elastic Stack ou Datadog.
@@ -427,6 +427,7 @@ Existem várias ferramentas de monitoramento que você pode utilizar, como:
 * Prometheus e Grafana para monitorar métricas de desempenho
 * ELK Stack (Elasticsearch, Logstash, Kibana) para analisar logs e monitorar o aplicativo
 * New Relic para monitorar o desempenho do aplicativo e identificar problemas
+
 
 
 # 3. SSDLC e Práticas de Código Seguro
@@ -528,7 +529,7 @@ A organização mantém diversos projetos open source. Toda gestão da OWASP é 
 É conjunto de requisitos e controle de segurança necessários ao projetar, desenvolver e testar aplicações web. É um guia para verificar a segurança das aplicações web em diferentes níveis de maturidade, do baixo ao avançado.
 
 
-#### [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/)
+### [OWASP Proactive Controls](https://owasp.org/www-project-proactive-controls/)
 
 É uma lista que descrevem as 10 categorias de técnica de defesa e controle. É uma lista de conhecimento prático sobre como desenvolver software seguro. 
 
@@ -546,9 +547,16 @@ São recomendações sobre práticas de codificacões desde a prevenção de vul
 
 Fornecem dicas rápidas e orientações para resolver problemas de segurança específicos de diferentes tecnologias e linguagens de programação.
 
+### [OWASP API Security Top 10](https://owasp.org/API-Security/editions/2023/en/0x00-header/)
+
+
+É um relatório com os 10 riscos de segurança mais criticos, encontrados em APIs.
+
+
 ## 3.3 Boas praticas de segurança para codificação
 
 Para criar esse guia usei como base **OWASP Secure Coding Practices** e **OWASP Cheat Sheets**
+
 
 
 ### A. Segurança de entrada e saída de dados:

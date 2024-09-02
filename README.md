@@ -4,7 +4,8 @@
 
 # Gestão de erros
 
-Turma Online XX - Imersão JavaScript | Semana XX | 20XX | Professora Rayane Pimentel
+Turma Online 36 - Imersão JavaScript | Semana 09 | 2024 | Professora [Rayane Pimentel](https://www.linkedin.com/in/rayanepimentel/)
+
 
 ### Objetivo
 

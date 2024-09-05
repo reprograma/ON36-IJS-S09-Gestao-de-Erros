@@ -909,6 +909,57 @@ Como podemos ver na imagem, usuários diferentes com senhas iguais geram hash di
 Saiba mais aqui: [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#salting)
 
 
+### Mas como funciona o salt no login?
+
+<img src="./assets/log.png">
+
+Para curiosidade, você pode verificar nesse diagrama ^ ^
+
+[Diagrama](https://whimsical.com/salt-VSFTZTWKkaLHjSXvA1WpiK)
+
+
+### JWT - JSON WEb Token
+
+JWT (JSON Web Token) é um padrão aberto RFC 7519 que fornece um método seguro para comunicar informações entre duas partes.
+Um token JWT é uma string composta de 3 partes separadas pelo caractere ponto. Cada uma das partes respectivamente são:
+
+1.Header
+2.Payload
+3.Signature
+
+<img src="./assets/jwt.png">
+
+#### JWT - gerar token
+
+Payload:
+
+- **sub** (subject) = Entidade a quem o token pertence, normalmente o ID do usuário;
+- **iss** (issuer) = Emissor do token;
+- **exp** (expiration) = Timestamp de quando o token irá expirar;
+- **iat** (issued at) = Timestamp de quando o token foi criado;
+- **aud** (audience) = Destinatário do token, representa a aplicação que usara-lo.
+
+Geralmente os atributos mais utilizados são: `sub, iss e exp`.
+
+Você vai criar o payload e adicionar a signature, que será sua "chave secreta".
+
+<img src="./assets/token.png">
+
+
+#### JWT - verificar token
+
+
+A validação do token JWT serve para garantir que o token recebido no pedido é autêntico, não foi modificado e ainda é válido (não expirou). Isso ajuda a garantir que a requisição está sendo feita por um usuário autorizado.
+
+- A assinatura está correta (não foi adulterada).
+- O token não expirou (exp).
+- O emissor (iss) e o público (aud) são os esperados.
+
+
+<img src="./assets/verToken.png">
+
+
+
 
 ####
 

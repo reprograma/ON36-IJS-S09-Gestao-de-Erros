@@ -39,7 +39,8 @@ O que veremos na aula de hoje?
     - [SSDLC](#31-ssdlc)
     - [OWASP](#32-owasp)
     - [Boas praticas de segurança para codificação](#33-boas-praticas-de-segurança-para-codificação)
-    -[Ferramentas de segurança na pipeline](#ferramentas-de-segurança-na-pipeline)
+    - [Ferramentas de segurança na pipeline](#34-ferramentas-de-segurança-na-pipeline)
+    - [Autenticacão vs Autorização](#35-autenticação-e-autorização)
 
   - [Exercícios](#exercícios)
   - [Material da aula](#material-da-aula)
@@ -701,7 +702,7 @@ Boas práticas:
 
 
 
-## Ferramentas de segurança na pipeline
+## 3.4 Ferramentas de segurança na pipeline
 
 Vamos entender alguns conceitos importantes:
 
@@ -829,6 +830,83 @@ Veja o que a mensagem informa.
 Depois de analisar todas vulnerabilidades, se você realmente encontrou uma vulnerabilidade, precisa comunicar o time,  conforme o processo definido pela sua empresa.
 
 Só lembrando que `risco-aceito`, não é definido por nós. Nós validamos e reportamos as vulnerabilidades. Só vamos classifica-lá como `risco-aceito`, após o report do time.
+
+## 3.5 Autenticação e Autorização
+
+### Autenticação
+
+`Identifica o usuário e confirma que ele é quem diz ser.`
+
+Algo que você sabe – geralmente uma senha ou um PIN e
+Algo que você tem – como um dispositivo confiável que não é facilmente duplicado, como um telefone ou uma chave de hardware ou
+Algo que você é – uma biometria, como uma impressão digital ou uma verificação facial.
+
+Estou me autenticando, estou provando que sou eu mesmo.
+
+<img src="./assets/auth.png">
+
+### Autorização
+
+Ao autenticar um usuário, você precisará decidir onde ele pode ir e o que ele tem permissão para ver e tocar. Esse processo é chamado de autorização.
+
+Agora que eu sei que é o usuário mesmo, vou olhar tudo o que ele tem de autorização. Quais recursos ele pode acessar, onde ele pode modificar, até onde ele pode chegar.
+
+Autenticação é o processo de verificação de que um usuário é quem ele afirma ser. A autorização envolve verificar se um usuário pode fazer algo.
+
+`Determina o nível de acesso que aquele recurso terá.`
+
+Vem depois da autenticação, eu sei quem é você, você pode acessar esse recurso? Ou seja, o que vc pode ter acesso.
+
+### Autenticação e Gerenciamento Credenciais
+
+Como vimos a autenticação refere-se à validação das informações fornecidas pelo usuário, como nome de usuário e senha, para garantir que correspondam às credenciais corretas e autorizar o acesso ao sistema.
+
+O gerenciamento de credenciais abrange atividades relacionadas ao armazenamento seguro e à proteção das informações de autenticação dos usuários, como senhas, chaves de acesso ou certificados digitais. Isso envolve a implementação de práticas de segurança, como a criptografia, para evitar o acesso não autorizado a essas informações.
+
+Medidas:
+- Use um protocolo de transmissão seguro: as senhas devem ser transmitidas por um protocolo seguro, como HTTPS, para evitar a interceptação por invasores.
+- As senhas salt e hash: devem ser salted e hashed antes de armazená-las no banco de dados.
+- Armazenar senhas em local seguro: As senhas devem ser armazenadas em local seguro com acesso restrito.
+- Monitorar tentativas de senha: as organizações devem monitorar senhas com falha para detectar e prevenir ataques de força bruta.
+
+
+### Senhas salt e hash
+
+#### Senha com hash sem salt.
+
+Usuários diferentes com a mesma senha, gera o mesmo hash.
+Se você usar ferramentas de descriptografia MD5(inclusive MD5 não é recomendado de forma alguma, utilizei apenas para exemplo), você encontrará a senha em segundos.  
+
+<img src="./assets/hashsemsalt.png">
+
+**Criando usuários sem salt**
+
+Criando dois usuários com a mesma senha, não usando salt.
+
+<img src="./assets/userHash.png">
+
+Como podemos ver na imagem, usuários diferentes com senhas iguais geram o mesmo hash.
+
+#### Senha com hash mais salt.
+
+Hash com o salt é mais seguro, não é mais previsível.    
+O salt é aleatório e único para cada usuário.  
+
+Mesmo usuário diferentes com senhas iguais, o hash não será igual, sempre será diferente
+
+<img src="./assets/salt.png">
+
+**Criando usuário com salt**
+
+Criando dois usuários com a mesma senha e usando salt.
+
+<img src="./assets/usersalt.png">
+
+Como podemos ver na imagem, usuários diferentes com senhas iguais geram hash diferente.
+
+
+Saiba mais aqui: [OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#salting)
+
 
 
 ####

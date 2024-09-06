@@ -42,7 +42,8 @@ O que veremos na aula de hoje?
     - [Boas praticas de segurança para codificação](#33-boas-praticas-de-segurança-para-codificação)
     - [Ferramentas de segurança na pipeline](#34-ferramentas-de-segurança-na-pipeline)
     - [Autenticacão vs Autorização](#35-autenticação-e-autorização)
-    - [Testes de Segurança]()
+    - [Testes de Segurança](#36-testes-de-segurança)
+    - [Ferramenta de segurança para Devs](#37-ferramenta-de-segurança-para-devs)
 
   - [Exercícios](#exercícios)
   - [Material da aula](#material-da-aula)

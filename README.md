@@ -1179,7 +1179,7 @@ Clique no status "201", essa é a senha do usuário. Com botão direito clique e
 
 Vá para aba "Repeater", clique em "Send". Login feito com sucesso!
 
-<img src="./assets/p12.png">
+<img src="./assets/p13.png">
 
 ### E agora?
 

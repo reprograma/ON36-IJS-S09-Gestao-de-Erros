@@ -42,6 +42,7 @@ O que veremos na aula de hoje?
     - [Boas praticas de segurança para codificação](#33-boas-praticas-de-segurança-para-codificação)
     - [Ferramentas de segurança na pipeline](#34-ferramentas-de-segurança-na-pipeline)
     - [Autenticacão vs Autorização](#35-autenticação-e-autorização)
+    - [Testes de Segurança]()
 
   - [Exercícios](#exercícios)
   - [Material da aula](#material-da-aula)
@@ -957,6 +958,240 @@ A validação do token JWT serve para garantir que o token recebido no pedido é
 
 
 <img src="./assets/verToken.png">
+
+
+## 3.6 Testes de segurança
+
+### User Story com OWASP ASVS
+
+No login da plataforma, preciso proteger contra acesso não autorizado.
+
+Quais os requisitos eu preciso para essa proteção?
+
+
+**Problema**: Precisa-se proteger o sistema contra acessos não autorizados.
+**Fonte**: ASVS (Application Security Verification Standard) 
+**Seção do ASVS**: V3 Gestão de Sessão
+
+<img src="./assets/asvs.png">
+
+Como [tipo de usuário], eu quero [meta ou objetivo] para que [benefício ou resultado]
+
+**User Story**: "**Como um** desenvolvedor, **eu quero** que o sistema expire automaticamente as sessões após 30 minutos de inatividade, **para que** reduza o risco de acesso não autorizado."
+
+**Requisito de Segurança (ASVS):** "O sistema deve expirar automaticamente as sessões após 30 minutos de inatividade, conforme OWASP ASVS." OWASP ASVS."
+
+- O comportamento esperado (expiração automática das sessões)
+- O critério específico (após 30 minutos de inatividade)
+- A referência ao OWASP ASVS
+
+<img src="./assets/asvsv3.png">
+
+### Testes
+
+- **Testes de Aceitação:** Verificar se a expiração da sessão está funcionando conforme esperado.
+- **Teste Manual**: Iniciar sessão, permanecer inativo por 30 minutos e verificar se a sessão é encerrada.
+- **Teste Automatizado**: Simular a inatividade e verificar a expiração da sessão programaticamente.
+
+
+### Teste Automatizado: Jest
+
+
+<img src="./assets/recapitulando.png">
+
+
+**Como ficaria o teste:**
+
+
+```ts
+it('deve falhar a autenticação com um token expirado', async () => {
+    // Simule a criação de um token com expiração curta (1 segundo)
+    const payload = { id: '1', name: 'Test User', email: 'test@example.com' };
+    const token = jwtService.sign(payload, { expiresIn: '1s' });
+
+    // Espere 2 segundos para garantir que o token tenha expirado
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    try {
+      // Simule a verificação do token após expiração
+      authService.checkToken(token);
+    } catch (e) {
+      expect(e).toBeInstanceOf(BadRequestException);
+      expect(e.message).toContain('jwt expired');
+    }
+  });
+```
+
+<img src="./assets/testepass.png">
+
+
+**Test manual - Insomnia**
+
+Na rota **/clients**, verifica se o token tá válido utilizando **AuthGuard**:
+
+<img src="./assets/authguad.png">
+
+Acessando **/clients** com o token valido
+
+1. Faça login **/auth/login** e pegue o token:
+
+
+<img src="./assets/auth1.png">
+
+
+2. Acesse **/clients** passando o token valido:
+
+<img src="./assets/auth2.png">
+
+3. Agora espere 2 minutos e acesse novamente **/clients**:
+
+<img src="./assets/auth3.png">
+
+
+
+## 3.7 Ferramenta de segurança para Devs
+
+### Burp Suite
+
+Burp Suite é uma plataforma integrada de segurança para testes de aplicações web. Ela oferece uma variedade de ferramentas para realizar análises de segurança e identificar vulnerabilidades.
+
+**Funcionalidade Gratuita**: A versão gratuita do Burp Suite (Burp Suite Community Edition) fornece ferramentas essenciais para realizar testes de segurança básicos.
+
+Que vão ajudar a depurar suas APIs, verificar mecanismos de autenticação/autorização e garantir o manejo correto de cookies e cabeçalhos de segurança.
+
+### Ferramentas e alguns recursos do Burp Suite
+
+1. Proxy
+
+**Descrição**: O Burp Proxy permite interceptar e modificar requisições e respostas HTTP/S entre o navegador e o servidor. Isso é útil para analisar e alterar dados trocados durante a comunicação com a aplicação.
+
+**Uso**: Configure o navegador para usar o proxy do Burp e teste como a aplicação responde a diferentes inputs.
+
+
+2. Repeater
+
+**Descrição**: A ferramenta Repeater permite enviar manualmente requisições HTTP para o servidor e analisar as respostas. É útil para testar e modificar parâmetros de uma requisição para verificar como a aplicação responde a diferentes cenários.
+
+**Características**:
+- Manipulação de Requisições: Alterar parâmetros e cabeçalhos.
+- Teste Manual: Reenviar requisições repetidamente para observar variações nas respostas.
+
+**Uso**: Ideal para testar vulnerabilidades, como injeções SQL ou problemas de autenticação.
+
+3. Intruder
+
+**Descrição**: O Intruder é usado para automatizar ataques e testes de força bruta. Ele pode tentar múltiplas entradas em um único campo para identificar vulnerabilidades.
+
+**Características**:
+- Ataques de Força Bruta: Tentar diferentes combinações de entrada.
+- Automação: Configurar payloads e estratégias de ataque.
+
+**Uso**: Testar os campos de entrada e identificar possíveis falhas de segurança, como por exemplo "login".
+
+
+### Demostração de uso:
+
+**Objetivo**: Descobrir a senha de um usuário específico
+
+**Ferramentas**: 
+
+- **Proxy**: O Proxy do Burp Suite permite interceptar e modificar o tráfego HTTP/S entre o navegador e o servidor.
+- **Intruder**: Ideal para ataques de força bruta (brute force) e para testar diferentes combinações de senhas.
+- **Repeater**: Depois de capturar uma requisição de login no Proxy e descobrir a senha com ataque de força bruta, você pode enviá-la para o Repeater e fazer o login.
+
+### Instalação e configuração
+
+Aqui tem um passo a passo que eu fiz: [Burp Suite](https://denim-flight-0a6.notion.site/Lab-Linux-e-Redes-Parte-II-d4071a0967d243ffa0d8106e22ba6321#4f59df0e2d654f9aa513618754699888)
+
+
+```ts
+Como não temos o front, só back, irei fazer um pouco diferente. Por exemplo: alterar manualmente GET para POST
+```
+
+### Proxy
+
+No Burp Suite:
+
+<img src="./assets/p1.png">
+
+
+No navegador ative o burp e acesse a url da API:
+
+<img src="./assets/p2.png">
+
+
+Altere o "Request":
+
+<img src="./assets/p3.png">
+
+
+Clique com botão direito e "Send to repeater":
+
+<img src="./assets/p4.png">
+
+
+### Repeater
+
+Na aba repeater, adicione o e-mail do usuário que você sabe que existe e clicar em "Send":
+
+<img src="./assets/p5.png">
+
+Aqui a mensagem é genérica, não identifica se é o e-mail ou a senha que estão incorretos. Mas eu sei o e-mail do usuário, só não sei a senha (ainda). Para isso, vamos para o `Intruder`
+
+Botão direito, clique em "Send to Intruder"
+
+<img src="./assets/p6.png">
+
+### Intruder
+
+Você vai selecionar a senha e depois clicar em "Add$":
+
+<img src="./assets/p7.png">
+
+
+Clique em "Playloads". Você pode adicionar uma lista de possíveis senhas clicando no "Paste" ou no `Add` para adicionar manualmente:
+
+
+<img src="./assets/p8.png">
+
+Depois clique em "Start attack", irá abrir uma nova janela:
+
+
+<img src="./assets/p9.png">
+
+Aqui irá aparecer uma mensagem de "alerta", é só fecha-la e abrir a nova janela.
+
+Caso você tenha dificuldade de encontrar essa janela. No icone do burp suite, clique com botão direito e depois na janela que abriu (provavelmente terá só uma).
+
+
+<img src="./assets/p10.png">
+
+Nessa janela você pode acompanhar ele fazendo o brute force:
+
+<img src="./assets/p11.png">
+
+Clique no status "201", essa é a senha do usuário. Com botão direito clique em "Send repeater"
+
+<img src="./assets/p12.png">
+
+### Repeater
+
+Vá para aba "Repeater", clique em "Send". Login feito com sucesso!
+
+<img src="./assets/p12.png">
+
+### E agora?
+
+- Como proteger sua aplicação contra ataques de força bruta?
+- Quais ferramentas e bibliotecas de segurança podem ajudar a mitigar ataques de força bruta?
+- Onde podemos encontrar documentação e boas práticas sobre proteção contra ataques de força bruta?
+
+
+Para as respostas, recomendo que vocês vejam novamente o capítulo [Projetos OWASP](#32-owasp).
+
+### Recomendações
+
+- [https://portswigger.net/web-security](https://portswigger.net/web-security)
 
 
 

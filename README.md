@@ -6,10 +6,14 @@
 
 Turma Online 36 - Imersão JavaScript | Semana 09 | 2024 | Professora [Rayane Pimentel](https://www.linkedin.com/in/rayanepimentel/)
 
+### Professora
+
+Oi, pessoal! Sou a Rayane – mãe, programadora, aspirante a AppSec, mentora e professora 💖 
+Já passei pela {reprograma} duas vezes, participando da turma 01 fullstack e da turma 01 Educa{devas}. Também fui monitora-anjo e agora estou de volta como professora. 
+Curiosidade: adoro me envolver em trabalhos voluntários, estou sempre assistindo alguma novela/série (geralmente as antigas) e a minha playlist é uma viagem no tempo para os anos 80/90/2000! 🎶📺
 
 ### Objetivo
 
-- Breve apresentação do conteúdo e dos objetivos da aula.
 - Importância da gestão de erros e segurança em APIs.
 
 ### Resumo
